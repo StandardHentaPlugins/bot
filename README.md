@@ -1,4 +1,5 @@
 # HENTA Плагин: common/bot
+[![Build Status](https://travis-ci.com/StandardHentaPlugins/bot.svg?branch=master)](https://travis-ci.com/StandardHentaPlugins/bot)
 Связующее ядро для вашего бота
 
 ```js
