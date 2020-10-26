@@ -1,11 +1,10 @@
-import Henta from 'henta';
 import { compose, Middleware } from 'middleware-io';
 import Emittery from 'emittery';
 import ContextService from './contextService';
 import createMessageBuilder from './messageBuilder/creator';
 
 export default class BotPlugin {
-  henta: Henta;
+  henta: any;
   settings: any;
   middleware: Middleware<any>;
   handlers = new Map();
@@ -15,7 +14,7 @@ export default class BotPlugin {
   on = this.emitter.on.bind(this.emitter);
   emit = this.emitter.emit.bind(this.emitter);
 
-  constructor(henta: Henta) {
+  constructor(henta) {
     this.henta = henta;
     this.contextService = new ContextService(this);
   }
