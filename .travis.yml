@@ -2,7 +2,16 @@ language: node_js
 node_js:
   - '12'
 script:
-  - npm i
   - npm i -g typescript typings
   - typings install
+  - npm i
   - npm run-script build
+  - zip plugin * -r
+
+deploy:
+  provider: releases
+  api_key: '$GITHUB_API_KEY'
+  file: "plugin.zip"
+  skip_cleanup: true
+  on:
+    tags: true
