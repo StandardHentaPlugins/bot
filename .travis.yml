@@ -13,3 +13,5 @@ deploy:
   api_key: '$GITHUB_API_KEY'
   file: "plugin.zip"
   skip_cleanup: true
+  on:
+    branch: master
