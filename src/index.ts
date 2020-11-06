@@ -22,6 +22,11 @@ export default class BotPlugin {
   async init(henta) {
     this.settings = await henta.util.loadConfig('bot.json');
     henta.vk.updates.on('message', this.process.bind(this));
+
+    this.handlers.set('log', (ctx, next) => {
+      this.henta.log(`${ctx.senderId}${ctx.isChat ? `/${ctx.chatId}` : ''}: ${ctx.text ? ctx.text.split('\n')[0] : '-'}`);
+      return next();
+    });
   }
 
   start(henta) {
@@ -56,10 +61,6 @@ export default class BotPlugin {
 
       if (this.settings.ignoreGroups && ctx.senderId < 0) {
         return next();
-      }
-
-      if (this.settings.logNewMessages) {
-        this.henta.log(`${ctx.senderId}${ctx.isChat ? `/${ctx.chatId}` : ''}: ${ctx.text ? ctx.text.split('\n')[0] : '-'}`);
       }
 
       this.contextService.apply(ctx);

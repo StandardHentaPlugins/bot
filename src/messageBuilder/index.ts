@@ -30,6 +30,7 @@ export default class MessageBuilder {
     }
 
     this.msg.peer_id = peerId || this.context.peerId;
+    this.msg.random_id = Math.floor(Math.random() * 10000000);
     await this.run();
     return this.context.vk.api.messages.send(this.msg);
   }
@@ -151,10 +152,10 @@ export default class MessageBuilder {
   }
 
   audioMessage(source) {
-    return this.attach(
+    return this.attach(async () =>
       this.context.vk.upload.audioMessage({
         ['peer_id']: this.context.peerId,
-        source
+        source: { value: await source }
       })
     );
   }
@@ -166,8 +167,8 @@ export default class MessageBuilder {
 
     return this.attach((async () => this.context.vk.upload.messagePhoto(this.context.peerId < 2e9 ? {
       ['peer_id']: this.context.peerId,
-      source: await source
-    } : { source: await source })
+      source: { value: await source }
+    } : { source: { value: await source } })
     )());
   }
 
@@ -180,7 +181,7 @@ export default class MessageBuilder {
       ['is_private']: 1,
       ['group_id']: this.context.henta.groupId,
       ['access_token']: this.context.henta.config.private.vk.pageToken,
-      source: await source
+      source: { value: await source }
     })
     )());
   }
