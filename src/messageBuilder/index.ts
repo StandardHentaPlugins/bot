@@ -30,7 +30,7 @@ export default class MessageBuilder {
     }
 
     this.msg.peer_id = peerId || this.context.peerId;
-    this.msg.random_id = Math.floor(Math.random() * 10000000);
+    this.msg.random_id = getRandomId();
     await this.run();
     return this.context.vk.api.messages.send(this.msg);
   }
