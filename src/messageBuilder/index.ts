@@ -53,10 +53,11 @@ export default class MessageBuilder {
       ...this.msg
     }));
 
-    return this.context.vk.collect.executes('messages.send', [
-      ...userMessages,
-      ...chatMessages
-    ]);
+    return this.context.henta.vkWorker.VKLib.executes({
+      api: this.context.vk.api,
+      method: 'messages.send',
+      queue: [ ...userMessages, ...chatMessages ]
+    });
   }
 
   async uploadAttachments() {
